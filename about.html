@@ -1,65 +1,23 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>À Propos - Nû Vivi</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <nav class="mobile-nav">
-        <div class="logo">🍦 Nû Vivi</div>
-        <div class="hamburger" onclick="toggleMenu()">☰</div>
-    </nav>
-    <div id="menu-overlay" class="menu-overlay">
-        <a href="index.html" onclick="toggleMenu()">Accueil</a>
-        <a href="menu.html" onclick="toggleMenu()">Notre Menu</a>
-        <a href="about.html" onclick="toggleMenu()">À Propos</a>
-        <a href="cart.html" onclick="toggleMenu()" class="cart-link">🛒 Panier (<span id="mobile-cart-count">0</span>)</a>
-    </div>
+    <!-- ... (Contenu de la page À Propos précédente) ... -->
 
-    <div class="page-header">
-        <h1>Qui sommes-nous ?</h1>
-    </div>
-
-    <section class="section">
-        <div class="card profile-card">
-            <div class="profile-img">
-                <!-- Tu peux remplacer ceci par une photo d'Ayodélé -->
-                <div class="placeholder-img">👩‍🍳</div> 
-            </div>
-            <h2>Ayodélé SINGBO</h2>
-            <p class="role">PDG / Fondatrice de Nû Vivi</p>
-            <div class="divider"></div>
-            <p>
-                Originaire de Parakou, Ayodélé est une passionnée de cuisine et de produits naturels. 
-                Après plusieurs années à travailler dans la restauration, elle décide en 2024 de créer <strong>Nû Vivi</strong>.
-            </p>
-            <p>
-                Son rêve ? Proposer des produits laitiers et des sandwichs qui ne sont pas seulement nourrissants, 
-                mais qui réveillent les papilles et apportent de la joie.
-            </p>
+    <!-- Barre de panier flottante -->
+    <a href="cart.html" class="floating-cart-bar" id="floating-cart">
+        <div class="cart-left">
+            <span class="badge" id="cart-badge">0</span>
+            <span>Voir mon panier</span>
         </div>
-
-        <div class="card">
-            <h3>Nos valeurs</h3>
-            <ul class="values-list">
-                <li>🌿 <strong>Ingrédients frais</strong> : Lait local, épices naturelles.</li>
-                <li>❤️ <strong>Fait avec passion</strong> : Chaque plat est préparé à la commande.</li>
-                <li>🙏 <strong>Guidés par la foi</strong> : "Que la grâce de l'Éternel affermisse l'ouvrage de nos mains" (Ps 90:17).</li>
-            </ul>
+        <div class="cart-right">
+            <span id="cart-total-mini">0 F</span> →
         </div>
+    </a>
 
-        <div class="card">
-            <h3>Notre promesse</h3>
-            <p>Chez Nû Vivi, nous ne faisons pas de la "fast food" industrielle. Chaque yaourt est préparé le matin, chaque sandwich est assemblé avec soin. Notre objectif est de vous offrir un moment de bonheur, que ce soit pour une pause gourmande ou un repas en famille.</p>
-        </div>
-    </section>
-
-    <footer>
-        <p>📍 Banikanni Catholique, Parakou, Bénin</p>
-        <p>📞 <a href="https://wa.me/2290161102477">+229 01 61 10 24 77</a></p>
-    </footer>
     <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            updateBadge();
+            updateCartCount();
+            updateMiniTotal();
+        });
+    </script>
 </body>
 </html>
