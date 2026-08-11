@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Nû Vivi - Accueil</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Menu Mobile (Hamburger) -->
+    <nav class="mobile-nav">
+        <div class="logo">🍦 Nû Vivi</div>
+        <div class="hamburger" onclick="toggleMenu()">☰</div>
+    </nav>
+    <div id="menu-overlay" class="menu-overlay">
+        <a href="index.html" onclick="toggleMenu()">Accueil</a>
+        <a href="menu.html" onclick="toggleMenu()">Notre Menu</a>
+        <a href="about.html" onclick="toggleMenu()">À Propos</a>
+        <a href="cart.html" onclick="toggleMenu()" class="cart-link">🛒 Panier (<span id="mobile-cart-count">0</span>)</a>
+    </div>
+
+    <!-- Section Héro -->
+    <header class="hero">
+        <div class="hero-content">
+            <h1>Nû Vivi</h1>
+            <p class="slogan">Le goût qui parle à ton cœur ❤️</p>
+            <p class="sub-slogan">Yaourts naturels & Sandwichs gourmands<br>Fait maison à Parakou.</p>
+            <a href="menu.html" class="btn-primary">Voir le Menu</a>
+        </div>
+    </header>
+
+    <!-- Section À Propos Rapide -->
+    <section class="section">
+        <h2>Fraîcheur et Passion</h2>
+        <div class="card">
+            <p>Chez Nû Vivi, chaque yaourt est préparé avec amour le matin même. Nos sandwichs sont garnis à la commande avec des ingrédients locaux et de saison.</p>
+            <a href="about.html" class="btn-secondary">Découvrir notre histoire</a>
+        </div>
+    </section>
+
+    <!-- Pied de page -->
+    <footer>
+        <p>📍 Banikanni Catholique, Parakou, Bénin</p>
+        <p>📞 <a href="https://wa.me/2290161102477">+229 01 61 10 24 77</a></p>
+        <p class="verse">Ps 90:17 - Que l'Éternel affermisse l'ouvrage de nos mains.</p>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Mise à jour du compteur de panier sur toutes les pages
+        function updateCartCount() {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            document.getElementById('mobile-cart-count').innerText = cart.length;
+        }
+        document.addEventListener('DOMContentLoaded', updateCartCount);
+    </script>
+</body>
+</html>
