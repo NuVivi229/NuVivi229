@@ -7,18 +7,17 @@ function toggleMenu() {
 }
 
 // Fonction Ajouter au panier
-function addToCart(name, price, image) {
+function addToCart(name, price) {
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
-    cart.push({ name, price, image });
+    cart.push({ name, price });
     localStorage.setItem('cart', JSON.stringify(cart));
     
-    // Feedback visuel pour mobile
-    const btn = event.currentTarget;
-    btn.style.opacity = '0.5';
-    setTimeout(() => btn.style.opacity = '1', 300);
-    
+    // Feedback visuel (vibration de l'écran ou popup)
     updateBadge();
     updateCartCount();
+    updateMiniTotal();
+    // Petit effet de confirmation sur mobile
+    window.navigator.vibrate ? window.navigator.vibrate(10) : null;
 }
 
 // Mise à jour du badge sur le bouton flottant
@@ -27,7 +26,9 @@ function updateBadge() {
     const badge = document.getElementById('cart-badge');
     if(badge) {
         badge.innerText = cart.length;
-        badge.style.display = cart.length > 0 ? 'flex' : 'none';
+        // On cache la barre si le panier est vide
+        const bar = document.getElementById('floating-cart');
+        if(bar) bar.style.display = cart.length > 0 ? 'flex' : 'none';
     }
 }
 
@@ -36,4 +37,13 @@ function updateCartCount() {
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
     const countElem = document.getElementById('mobile-cart-count');
     if(countElem) countElem.innerText = cart.length;
+}
+
+// Mise à jour du prix total dans la barre
+function updateMiniTotal() {
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    let total = 0;
+    cart.forEach(item => total += item.price);
+    const totalElem = document.getElementById('cart-total-mini');
+    if(totalElem) totalElem.innerText = total + " F";
 }
