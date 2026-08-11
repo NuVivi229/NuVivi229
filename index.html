@@ -3,51 +3,551 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>Nû Vivi - Accueil</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Nû Vivi · l'âme gourmande</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:opsz@14..32&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #fcf7f0;
+            font-family: 'Inter', sans-serif;
+            color: #2d2a24;
+            line-height: 1.5;
+            overflow-x: hidden;
+        }
+
+        :root {
+            --gold: #d9a55c;
+            --gold-light: #f3d9b1;
+            --green-deep: #2f5d4a;
+            --cream: #fcf7f0;
+            --shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.18);
+        }
+
+        /* --- menu mobile --- */
+        .mobile-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.8rem;
+            background: rgba(255, 251, 245, 0.78);
+            backdrop-filter: blur(14px);
+            position: sticky;
+            top: 0;
+            z-index: 60;
+            border-bottom: 1px solid rgba(217, 165, 92, 0.2);
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.7rem;
+            font-weight: 700;
+            color: var(--green-deep);
+            letter-spacing: -0.5px;
+        }
+        .logo i {
+            color: var(--gold);
+            margin-right: 6px;
+        }
+
+        .hamburger {
+            font-size: 2rem;
+            cursor: pointer;
+            color: var(--green-deep);
+            transition: 0.2s;
+            padding: 0 6px;
+        }
+        .hamburger:hover {
+            color: var(--gold);
+            transform: scale(1.05);
+        }
+
+        .menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(47, 93, 74, 0.96);
+            backdrop-filter: blur(10px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 2.2rem;
+            z-index: 100;
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            padding: 2rem;
+        }
+        .menu-overlay.open {
+            transform: translateX(0);
+        }
+        .menu-overlay a {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            color: #fcf7f0;
+            text-decoration: none;
+            border-bottom: 2px solid transparent;
+            transition: 0.25s;
+            padding: 0.2rem 0.8rem;
+            letter-spacing: 1px;
+        }
+        .menu-overlay a:hover {
+            border-bottom-color: var(--gold-light);
+            color: var(--gold-light);
+            transform: translateY(-3px);
+        }
+        .menu-overlay .cart-link {
+            font-size: 1.8rem;
+            background: rgba(255, 255, 255, 0.08);
+            padding: 0.6rem 2rem;
+            border-radius: 60px;
+            border: 1px solid rgba(255, 215, 150, 0.3);
+        }
+        .menu-overlay .cart-link i {
+            margin-right: 10px;
+        }
+
+        /* --- hero avec images produits chic --- */
+        .hero {
+            min-height: 92vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem 1.5rem 3rem;
+            background: radial-gradient(circle at 30% 20%, #faf1e6 0%, #f3e4d2 100%);
+            position: relative;
+            isolation: isolate;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: "✦";
+            font-size: 26rem;
+            color: rgba(217, 165, 92, 0.06);
+            position: absolute;
+            top: -25%;
+            right: -8%;
+            z-index: 0;
+            pointer-events: none;
+            transform: rotate(12deg);
+        }
+        .hero::after {
+            content: "✦";
+            font-size: 20rem;
+            color: rgba(217, 165, 92, 0.05);
+            position: absolute;
+            bottom: -5%;
+            left: -10%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* galerie d'images flottantes (chic) */
+        .product-showcase {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1.2rem 2rem;
+            margin-bottom: 2.2rem;
+            z-index: 2;
+            position: relative;
+            width: 100%;
+            max-width: 700px;
+        }
+
+        .product-item {
+            background: rgba(255, 251, 245, 0.6);
+            backdrop-filter: blur(6px);
+            border-radius: 60px 60px 30px 30px;
+            padding: 0.5rem 0.8rem 0.5rem 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            border: 1px solid rgba(255, 215, 150, 0.3);
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.04);
+            transition: 0.25s;
+        }
+        .product-item:hover {
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
+        }
+
+        .product-item img {
+            width: 48px;
+            height: 48px;
+            border-radius: 60px;
+            object-fit: cover;
+            border: 2px solid white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.06);
+        }
+
+        .product-item span {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #2d2a24;
+            padding-right: 0.8rem;
+            white-space: nowrap;
+        }
+        .product-item i {
+            color: var(--gold);
+            font-size: 0.8rem;
+            margin-right: 2px;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(3.8rem, 15vw, 6.5rem);
+            font-weight: 700;
+            color: var(--green-deep);
+            letter-spacing: -2px;
+            z-index: 2;
+            line-height: 1.1;
+            text-shadow: 0 4px 12px rgba(47, 93, 74, 0.06);
+        }
+        .hero h1 i {
+            color: var(--gold);
+            font-size: 0.8em;
+            margin: 0 0.1rem;
+        }
+
+        .hero .slogan {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: clamp(1.4rem, 4vw, 2.2rem);
+            color: #5a4d38;
+            margin: 0.3rem 0 0.2rem;
+            z-index: 2;
+            background: rgba(255, 251, 245, 0.6);
+            padding: 0.2rem 1.8rem;
+            border-radius: 60px;
+            backdrop-filter: blur(4px);
+            display: inline-block;
+        }
+
+        .hero .sub-slogan {
+            font-size: clamp(1rem, 2.2vw, 1.3rem);
+            color: #3e3a32;
+            max-width: 480px;
+            margin: 0.8rem auto 2rem;
+            z-index: 2;
+            background: rgba(255, 251, 245, 0.5);
+            padding: 0.6rem 1.6rem;
+            border-radius: 60px;
+            backdrop-filter: blur(2px);
+            border: 1px solid rgba(255, 215, 150, 0.2);
+            font-weight: 400;
+        }
+
+        .btn-primary {
+            display: inline-block;
+            background: var(--green-deep);
+            color: #fcf7f0;
+            padding: 1rem 3.2rem;
+            border-radius: 60px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 500;
+            font-size: 1.1rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 24px rgba(47, 93, 74, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 2;
+            letter-spacing: 0.3px;
+        }
+        .btn-primary i {
+            margin-right: 10px;
+        }
+        .btn-primary:hover {
+            background: #1f4536;
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 16px 36px rgba(47, 93, 74, 0.35);
+        }
+
+        /* section art avec images */
+        .section {
+            padding: 3.5rem 1.5rem 4rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .card-gourmandise {
+            background: rgba(255, 251, 245, 0.7);
+            backdrop-filter: blur(8px);
+            border-radius: 48px;
+            padding: 3rem 2rem;
+            text-align: center;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(255, 215, 150, 0.25);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-gourmandise .product-grid-mini {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1.5rem;
+            margin: 1.8rem 0 2.2rem;
+        }
+
+        .card-gourmandise .product-grid-mini img {
+            width: 90px;
+            height: 90px;
+            border-radius: 60px;
+            object-fit: cover;
+            border: 3px solid white;
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
+            transition: 0.25s;
+        }
+        .card-gourmandise .product-grid-mini img:hover {
+            transform: scale(1.05) rotate(-1deg);
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+        }
+
+        .card-gourmandise h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 5vw, 2.8rem);
+            color: var(--green-deep);
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.3px;
+        }
+        .card-gourmandise h2 i {
+            color: var(--gold);
+            margin: 0 6px;
+        }
+
+        .card-gourmandise p {
+            font-size: 1.05rem;
+            color: #3f3b34;
+            max-width: 540px;
+            margin: 0 auto 1.2rem;
+            line-height: 1.7;
+            font-weight: 350;
+        }
+
+        .btn-secondary {
+            display: inline-block;
+            background: transparent;
+            color: var(--green-deep);
+            padding: 0.8rem 2.6rem;
+            border-radius: 60px;
+            font-weight: 500;
+            text-decoration: none;
+            border: 1.5px solid var(--green-deep);
+            transition: 0.25s;
+            font-size: 1rem;
+        }
+        .btn-secondary i {
+            margin-right: 8px;
+        }
+        .btn-secondary:hover {
+            background: var(--green-deep);
+            color: #fcf7f0;
+            box-shadow: 0 8px 18px rgba(47, 93, 74, 0.2);
+            transform: scale(1.02);
+        }
+
+        /* footer */
+        footer {
+            background: #2d2a24;
+            color: #e5ddd0;
+            text-align: center;
+            padding: 2.8rem 1.5rem 2.2rem;
+            margin-top: 2rem;
+            border-top: 4px solid var(--gold);
+        }
+        footer p {
+            margin: 0.4rem 0;
+            font-size: 1rem;
+            letter-spacing: 0.3px;
+        }
+        footer a {
+            color: var(--gold-light);
+            text-decoration: none;
+            border-bottom: 1px dotted rgba(217, 165, 92, 0.3);
+            transition: 0.2s;
+        }
+        footer a:hover {
+            color: #fff;
+            border-bottom-color: var(--gold);
+        }
+        footer .verse {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 1.1rem;
+            margin-top: 1.2rem;
+            opacity: 0.7;
+            color: #c9bcab;
+            letter-spacing: 0.5px;
+        }
+        footer .verse i {
+            color: var(--gold);
+            margin: 0 6px;
+        }
+
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeUp 0.9s ease forwards;
+        }
+        @keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 500px) {
+            .hero h1 {
+                font-size: 3.2rem;
+            }
+            .hero .slogan {
+                font-size: 1.2rem;
+                padding: 0.2rem 1.2rem;
+            }
+            .btn-primary {
+                padding: 0.9rem 2.2rem;
+                font-size: 1rem;
+            }
+            .card-gourmandise {
+                padding: 2rem 1.2rem;
+                border-radius: 32px;
+            }
+            .product-item img {
+                width: 40px;
+                height: 40px;
+            }
+            .product-item span {
+                font-size: 0.75rem;
+            }
+            .card-gourmandise .product-grid-mini img {
+                width: 70px;
+                height: 70px;
+            }
+        }
+    </style>
 </head>
 <body>
+
     <!-- Menu Mobile -->
     <nav class="mobile-nav">
-        <div class="logo">✦ Nû Vivi</div>
-        <div class="hamburger" onclick="toggleMenu()">☰</div>
+        <div class="logo"><i class="fas fa-leaf"></i> Nû Vivi</div>
+        <div class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+            <i class="fas fa-bars"></i>
+        </div>
     </nav>
+
     <div id="menu-overlay" class="menu-overlay">
-        <a href="index.html" onclick="toggleMenu()">Accueil</a>
-        <a href="menu.html" onclick="toggleMenu()">Notre Menu</a>
-        <a href="about.html" onclick="toggleMenu()">À Propos</a>
-        <a href="cart.html" onclick="toggleMenu()" class="cart-link">🛒 Panier (<span id="mobile-cart-count">0</span>)</a>
+        <a href="index.html" onclick="toggleMenu()"><i class="fas fa-home"></i> Accueil</a>
+        <a href="menu.html" onclick="toggleMenu()"><i class="fas fa-utensils"></i> Notre Menu</a>
+        <a href="about.html" onclick="toggleMenu()"><i class="fas fa-heart"></i> À Propos</a>
+        <a href="cart.html" onclick="toggleMenu()" class="cart-link">
+            <i class="fas fa-shopping-bag"></i> Panier (<span id="mobile-cart-count">0</span>)
+        </a>
     </div>
 
-    <!-- Section Héro -->
+    <!-- Héro avec images produits -->
     <header class="hero fade-in-up">
-        <h1>Nû Vivi</h1>
-        <p class="slogan">« Le goût qui parle à ton cœur »</p>
-        <p class="sub-slogan">Yaourts onctueux & Sandwichs gourmands<br>Fait maison à Parakou.</p>
-        <a href="menu.html" class="btn-primary">Explorer le Menu</a>
+
+        <!-- Showcase d'images produits (chic & élégant) -->
+        <div class="product-showcase">
+            <div class="product-item">
+                <img src="https://images.unsplash.com/photo-1547592166-23ac45744acd?w=150&h=150&fit=crop&crop=center&auto=format" alt="Yaourt nature">
+                <span><i class="fas fa-star"></i> Yaourt velouté</span>
+            </div>
+            <div class="product-item">
+                <img src="https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=150&h=150&fit=crop&crop=center&auto=format" alt="Yaourt fruits">
+                <span><i class="fas fa-star"></i> Fruits rouges</span>
+            </div>
+            <div class="product-item">
+                <img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=150&h=150&fit=crop&crop=center&auto=format" alt="Sandwich gourmand">
+                <span><i class="fas fa-star"></i> Sandwich frais</span>
+            </div>
+        </div>
+
+        <h1><i class="fas fa-star"></i> Nû Vivi <i class="fas fa-star"></i></h1>
+        <p class="slogan"><i class="fas fa-quote-left"></i> Le goût qui parle à ton cœur <i class="fas fa-quote-right"></i></p>
+        <p class="sub-slogan">
+            <i class="fas fa-seedling"></i> Yaourts onctueux & Sandwichs gourmands <br> Fait maison à Parakou.
+        </p>
+
+        <a href="menu.html" class="btn-primary">
+            <i class="fas fa-arrow-right"></i> Explorer le Menu
+        </a>
     </header>
 
-    <!-- Section À Propos Rapide -->
+    <!-- Section À Propos avec mini galerie -->
     <section class="section fade-in-up" style="animation-delay: 0.2s;">
-        <div class="card" style="background: rgba(255,255,255,0.7); backdrop-filter: blur(5px); text-align: center;">
-            <h2 style="color: var(--green-deep); font-size: 1.6rem; margin-bottom: 10px;">L'Art de la Gourmandise</h2>
-            <p style="font-family: sans-serif; line-height: 1.6; color: #444; max-width: 400px; margin: 0 auto;">
-                Chaque yaourt est préparé avec amour le matin même. Nos sandwichs sont garnis à la commande avec des ingrédients locaux et de saison.
+        <div class="card-gourmandise">
+            <h2><i class="fas fa-paint-brush"></i> L'Art de la Gourmandise <i class="fas fa-paint-brush"></i></h2>
+
+            <!-- mini grille d'images chic -->
+            <div class="product-grid-mini">
+                <img src="https://images.unsplash.com/photo-1535051329528-d2b1a1e80dc4?w=150&h=150&fit=crop&crop=center&auto=format" alt="Yaourt maison">
+                <img src="https://images.unsplash.com/photo-1583160247711-2191776b4b91?w=150&h=150&fit=crop&crop=center&auto=format" alt="Préparation">
+                <img src="https://images.unsplash.com/photo-1506025516012-d61d42d12f78?w=150&h=150&fit=crop&crop=center&auto=format" alt="ingrédients frais">
+                <img src="https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=150&h=150&fit=crop&crop=center&auto=format" alt="Sandwich maison">
+            </div>
+
+            <p>
+                <i class="fas fa-heart" style="color: var(--gold);"></i>
+                Chaque yaourt est préparé avec amour le matin même.
+                Nos sandwichs sont garnis à la commande avec des ingrédients locaux et de saison.
             </p>
-            <a href="about.html" class="btn-secondary">Découvrir notre histoire</a>
+            <a href="about.html" class="btn-secondary">
+                <i class="fas fa-chevron-right"></i> Découvrir notre histoire
+            </a>
         </div>
     </section>
 
-    <!-- Pied de page -->
+    <!-- Footer -->
     <footer>
-        <p>📍 Banikanni Catholique, Parakou, Bénin</p>
-        <p>📞 <a href="https://wa.me/2290161102477">+229 01 61 10 24 77</a></p>
-        <p class="verse">« Que l'Éternel affermisse l'ouvrage de nos mains »</p>
+        <p><i class="fas fa-location-dot" style="color: var(--gold);"></i> Banikanni Catholique, Parakou, Bénin</p>
+        <p>
+            <i class="fas fa-phone" style="color: var(--gold);"></i>
+            <a href="https://wa.me/2290161102477"><i class="fab fa-whatsapp"></i> +229 01 61 10 24 77</a>
+        </p>
+        <p class="verse">
+            <i class="fas fa-feather"></i> « Que l'Éternel affermisse l'ouvrage de nos mains » <i class="fas fa-feather"></i>
+        </p>
     </footer>
 
-    <script src="script.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', updateCartCount);
+        function toggleMenu() {
+            const overlay = document.getElementById('menu-overlay');
+            overlay.classList.toggle('open');
+        }
+
+        function updateCartCount() {
+            const count = localStorage.getItem('cartCount') || 0;
+            const mobileSpan = document.getElementById('mobile-cart-count');
+            if (mobileSpan) mobileSpan.textContent = count;
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCartCount();
+            window.addEventListener('storage', function(e) {
+                if (e.key === 'cartCount') updateCartCount();
+            });
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                const overlay = document.getElementById('menu-overlay');
+                if (overlay.classList.contains('open')) overlay.classList.remove('open');
+            }
+        });
     </script>
 </body>
 </html>
