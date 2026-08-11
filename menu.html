@@ -26,19 +26,19 @@
     <div class="section" style="padding-top: 0;">
         <h2 class="category-title fade-in-up" style="animation-delay: 0.1s;">Nos Yaourts</h2>
         <div class="product-grid">
-            <div class="product-card fade-in-up" onclick="addToCart('Yaourt Vanille', 500, 'images/yaourt_vanille.jpg')" style="animation-delay: 0.2s;">
+            <div class="product-card fade-in-up" onclick="addToCart('Yaourt Vanille', 500)" style="animation-delay: 0.2s;">
                 <div class="product-img"><img src="images/yaourt_vanille.jpg" alt="Yaourt Vanille"></div>
                 <div class="product-info"><h3>Yaourt Vanille</h3><span class="price">500 F</span></div>
             </div>
-            <div class="product-card fade-in-up" onclick="addToCart('Yaourt Degué Mil', 500, 'images/yaourt_mil.jpg')" style="animation-delay: 0.3s;">
+            <div class="product-card fade-in-up" onclick="addToCart('Yaourt Degué Mil', 500)" style="animation-delay: 0.3s;">
                 <div class="product-img"><img src="images/yaourt_mil.jpg" alt="Yaourt Degué Mil"></div>
                 <div class="product-info"><h3>Degué Mil</h3><span class="price">500 F</span></div>
             </div>
-            <div class="product-card fade-in-up" onclick="addToCart('Yaourt Baobab', 600, 'images/yaourt_baobab.jpg')" style="animation-delay: 0.4s;">
+            <div class="product-card fade-in-up" onclick="addToCart('Yaourt Baobab', 600)" style="animation-delay: 0.4s;">
                 <div class="product-img"><img src="images/yaourt_baobab.jpg" alt="Yaourt Baobab"></div>
                 <div class="product-info"><h3>Yaourt Baobab</h3><span class="price">600 F</span></div>
             </div>
-            <div class="product-card fade-in-up" onclick="addToCart('Yaourt Chocolat', 700, 'images/yaourt_chocolat.jpg')" style="animation-delay: 0.5s;">
+            <div class="product-card fade-in-up" onclick="addToCart('Yaourt Chocolat', 700)" style="animation-delay: 0.5s;">
                 <div class="product-img"><img src="images/yaourt_chocolat.jpg" alt="Yaourt Chocolat"></div>
                 <div class="product-info"><h3>Yaourt Chocolat</h3><span class="price">700 F</span></div>
             </div>
@@ -46,24 +46,30 @@
 
         <h2 class="category-title fade-in-up" style="animation-delay: 0.2s;">Nos Sandwichs</h2>
         <div class="product-grid">
-            <div class="product-card fade-in-up" onclick="addToCart('Sandwich Vivi', 600, 'images/sandwich_vivi.jpg')" style="animation-delay: 0.3s;">
+            <div class="product-card fade-in-up" onclick="addToCart('Sandwich Vivi', 600)" style="animation-delay: 0.3s;">
                 <div class="product-img"><img src="images/sandwich_vivi.jpg" alt="Sandwich Vivi"></div>
                 <div class="product-info"><h3>Sandwich Vivi</h3><span class="price">600 F</span></div>
             </div>
-            <div class="product-card fade-in-up" onclick="addToCart('Sandwich Extra Poulet', 1200, 'images/sandwich_poulet.jpg')" style="animation-delay: 0.4s;">
+            <div class="product-card fade-in-up" onclick="addToCart('Sandwich Extra Poulet', 1200)" style="animation-delay: 0.4s;">
                 <div class="product-img"><img src="images/sandwich_poulet.jpg" alt="Sandwich Poulet"></div>
                 <div class="product-info"><h3>Sandwich Poulet</h3><span class="price">1200 F</span></div>
             </div>
-            <div class="product-card fade-in-up" onclick="addToCart('Jardin Croquant', 1200, 'images/jardin_croquant.jpg')" style="animation-delay: 0.5s;">
+            <div class="product-card fade-in-up" onclick="addToCart('Jardin Croquant', 1200)" style="animation-delay: 0.5s;">
                 <div class="product-img"><img src="images/jardin_croquant.jpg" alt="Jardin Croquant"></div>
                 <div class="product-info"><h3>Jardin Croquant</h3><span class="price">1200 F</span></div>
             </div>
         </div>
     </div>
 
-    <a href="cart.html" class="floating-cart">
-        <span>🛒</span>
-        <span class="badge" id="cart-badge">0</span>
+    <!-- Barre de panier flottante (Large et facile à toucher) -->
+    <a href="cart.html" class="floating-cart-bar" id="floating-cart">
+        <div class="cart-left">
+            <span class="badge" id="cart-badge">0</span>
+            <span>Voir mon panier</span>
+        </div>
+        <div class="cart-right">
+            <span id="cart-total-mini">0 F</span> →
+        </div>
     </a>
 
     <script src="script.js"></script>
@@ -71,6 +77,7 @@
         document.addEventListener('DOMContentLoaded', () => {
             updateBadge();
             updateCartCount();
+            updateMiniTotal();
         });
     </script>
 </body>
