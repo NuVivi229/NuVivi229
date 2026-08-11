@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Panier - Nû Vivi</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Inclusion de la librairie Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+    <nav class="mobile-nav">
+        <div class="logo">🍦 Nû Vivi</div>
+        <div class="hamburger" onclick="toggleMenu()">☰</div>
+    </nav>
+    <div id="menu-overlay" class="menu-overlay">
+        <a href="index.html" onclick="toggleMenu()">Accueil</a>
+        <a href="menu.html" onclick="toggleMenu()">Notre Menu</a>
+        <a href="about.html" onclick="toggleMenu()">À Propos</a>
+        <a href="cart.html" onclick="toggleMenu()" class="cart-link">🛒 Panier (<span id="mobile-cart-count">0</span>)</a>
+    </div>
+
+    <div class="page-header">
+        <h1>Votre Commande</h1>
+    </div>
+
+    <section class="section">
+        <div class="cart-items" id="cart-items">
+            <!-- Le JS va remplir ici -->
+            <p style="text-align:center; color:#888;">Votre panier est vide.</p>
+        </div>
+
+        <div class="cart-summary">
+            <h3>Récapitulatif</h3>
+            <div class="total-line">
+                <span>Total</span>
+                <span id="cart-total">0 F</span>
+            </div>
+        </div>
+
+        <!-- Formulaire Client -->
+        <div class="card form-card">
+            <h3>Vos coordonnées</h3>
+            <form id="order-form" onsubmit="event.preventDefault(); submitOrder();">
+                <div class="form-group">
+                    <label for="client-name">Votre nom</label>
+                    <input type="text" id="client-name" placeholder="Ex: Ayodélé" required>
+                </div>
+                <div class="form-group">
+                    <label for="client-address">Votre adresse / Quartier</label>
+                    <input type="text" id="client-address" placeholder="Ex: Banikanni Catholique" required>
+                </div>
+                <div class="form-group">
+                    <label for="client-phone">Votre numéro (optionnel)</label>
+                    <input type="tel" id="client-phone" placeholder="Ex: 01 61 10 24 77">
+                </div>
+                <div class="form-group">
+                    <label for="client-notes">Instructions spéciales</label>
+                    <textarea id="client-notes" rows="2" placeholder="Ex: Pas de concombres, livrer avant 13h..."></textarea>
+                </div>
+                
+                <button type="submit" class="btn-whatsapp">
+                    📱 Commander sur WhatsApp
+                </button>
+                <p style="font-size: 0.8em; text-align:center; margin-top:10px; color:#555;">
+                    *Paiement à la livraison (Espèces / Mobile Money)
+                </p>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <p>Nû Vivi - Le goût qui parle à ton cœur ❤️</p>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // --- CONFIGURATION SUPABASE ---
+        // Remplace ces valeurs par celles de ton projet Supabase
+        const SUPABASE_URL = 'https://TON_PROJET.supabase.co';
+        const SUPABASE_ANON_KEY = 'TON_CLE_ANON';
+        const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        // Remplissage du panier
+        function renderCart() {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const container = document.getElementById('cart-items');
+            const totalSpan = document.getElementById('cart-total');
+            
+            if(cart.length === 0) {
+                container.innerHTML = '<p style="text-align:center; color:#888; padding:20px;">Votre panier est vide. <br><a href="menu.html" class="btn-secondary" style="margin-top:10px; display:inline-block;">Voir le menu</a></p>';
+                totalSpan.innerText = "0 F";
+                return;
+            }
+
+            let html = '';
+            let total = 0;
+            cart.forEach((item, index) => {
+                total += item.price;
+                html += `
+                    <div class="cart-item">
+                        <div class="item-info">
+                            <h4>${item.name}</h4>
+                            <span class="item-price">${item.price} F</span>
+                        </div>
+                        <button class="btn-remove" onclick="removeFromCart(${index})">✕</button>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+            totalSpan.innerText = total + " F";
+            updateBadge();
+        }
+
+        function removeFromCart(index) {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            cart.splice(index, 1);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            renderCart();
+            updateCartCount();
+        }
+
+        // Envoi de la commande
+        async function submitOrder() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            if(cart.length === 0) {
+                alert("Votre panier est vide !");
+                return;
+            }
+
+            const name = document.getElementById('client-name').value.trim();
+            const address = document.getElementById('client-address').value.trim();
+            const phone = document.getElementById('client-phone').value.trim();
+            const notes = document.getElementById('client-notes').value.trim();
+
+            if(!name || !address) {
+                alert("Merci de remplir votre nom et votre adresse.");
+                return;
+            }
+
+            let orderDetails = "";
+            let total = 0;
+            cart.forEach(item => {
+                orderDetails += `- ${item.name} (${item.price} F)\n`;
+                total += item.price;
+            });
+            if(notes) orderDetails += `\n📝 Instructions: ${notes}`;
+
+            // 1. Enregistrer dans Supabase
+            try {
+                const { data, error } = await supabase
+                    .from('orders')
+                    .insert([
+                        { 
+                            client_name: name, 
+                            client_address: address, 
+                            client_phone: phone,
+                            order_details: orderDetails,
+                            total_amount: total
+                        }
+                    ]);
+                
+                if(error) {
+                    console.error("Erreur Supabase:", error);
+                    // On continue quand même vers WhatsApp si la BDD plante
+                } else {
+                    console.log("Commande enregistrée dans la base !");
+                }
+            } catch (e) {
+                console.error("Erreur réseau", e);
+            }
+
+            // 2. Préparer le message WhatsApp
+            let message = `🛒 *NOUVELLE COMMANDE NÛ VIVI*\n\n`;
+            message += `👤 *Nom :* ${name}\n`;
+            message += `📍 *Adresse :* ${address}\n`;
+            if(phone) message += `📞 *Téléphone :* ${phone}\n\n`;
+            message += `📦 *Détails de la commande :*\n${orderDetails}\n`;
+            message += `💰 *TOTAL :* ${total} F`;
+
+            const url = `https://wa.me/2290161102477?text=${encodeURIComponent(message)}`;
+            
+            // Ouvrir WhatsApp
+            window.open(url, '_blank');
+
+            // Vider le panier après envoi
+            localStorage.removeItem('cart');
+            renderCart();
+            updateCartCount();
+            
+            // Feedback utilisateur (optionnel)
+            setTimeout(() => {
+                alert("Commande envoyée sur WhatsApp ! Un message récapitulatif a été transmis à Ayodélé.");
+            }, 1000);
+        }
+
+        document.addEventListener('DOMContentLoaded', renderCart);
+    </script>
+</body>
+</html>
