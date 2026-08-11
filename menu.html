@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Menu - Nû Vivi</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="mobile-nav">
+        <div class="logo">🍦 Nû Vivi</div>
+        <div class="hamburger" onclick="toggleMenu()">☰</div>
+    </nav>
+    <div id="menu-overlay" class="menu-overlay">
+        <a href="index.html" onclick="toggleMenu()">Accueil</a>
+        <a href="menu.html" onclick="toggleMenu()">Notre Menu</a>
+        <a href="about.html" onclick="toggleMenu()">À Propos</a>
+        <a href="cart.html" onclick="toggleMenu()" class="cart-link">🛒 Panier (<span id="mobile-cart-count">0</span>)</a>
+    </div>
+
+    <div class="page-header">
+        <h1>Notre Menu</h1>
+        <p>Cliquez sur un produit pour l'ajouter au panier</p>
+    </div>
+
+    <div class="section" style="padding-top: 0;">
+        <h2 class="category-title">Nos Yaourts 🥛</h2>
+        <div class="product-grid">
+            <!-- Produit 1 -->
+            <div class="product-card" onclick="addToCart('Yaourt Vanille', 500, 'images/yaourt_vanille.jpg')">
+                <div class="product-img"><img src="images/yaourt_vanille.jpg" alt="Yaourt Vanille"></div>
+                <div class="product-info">
+                    <h3>Yaourt Vanille</h3>
+                    <span class="price">500 F</span>
+                </div>
+            </div>
+            <!-- Produit 2 -->
+            <div class="product-card" onclick="addToCart('Yaourt Degué Mil', 500, 'images/yaourt_mil.jpg')">
+                <div class="product-img"><img src="images/yaourt_mil.jpg" alt="Yaourt Degué Mil"></div>
+                <div class="product-info">
+                    <h3>Degué Mil</h3>
+                    <span class="price">500 F</span>
+                </div>
+            </div>
+            <!-- Produit 3 -->
+            <div class="product-card" onclick="addToCart('Yaourt Baobab', 600, 'images/yaourt_baobab.jpg')">
+                <div class="product-img"><img src="images/yaourt_baobab.jpg" alt="Yaourt Baobab"></div>
+                <div class="product-info">
+                    <h3>Yaourt Baobab</h3>
+                    <span class="price">600 F</span>
+                </div>
+            </div>
+            <!-- Produit 4 -->
+            <div class="product-card" onclick="addToCart('Yaourt Chocolat', 700, 'images/yaourt_chocolat.jpg')">
+                <div class="product-img"><img src="images/yaourt_chocolat.jpg" alt="Yaourt Chocolat"></div>
+                <div class="product-info">
+                    <h3>Yaourt Chocolat</h3>
+                    <span class="price">700 F</span>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="category-title">Nos Sandwichs 🥖</h2>
+        <div class="product-grid">
+            <!-- Produit 5 -->
+            <div class="product-card" onclick="addToCart('Sandwich Vivi', 600, 'images/sandwich_vivi.jpg')">
+                <div class="product-img"><img src="images/sandwich_vivi.jpg" alt="Sandwich Vivi"></div>
+                <div class="product-info">
+                    <h3>Sandwich Vivi</h3>
+                    <span class="price">600 F</span>
+                </div>
+            </div>
+            <!-- Produit 6 -->
+            <div class="product-card" onclick="addToCart('Sandwich Extra Poulet', 1200, 'images/sandwich_poulet.jpg')">
+                <div class="product-img"><img src="images/sandwich_poulet.jpg" alt="Sandwich Poulet"></div>
+                <div class="product-info">
+                    <h3>Sandwich Poulet</h3>
+                    <span class="price">1200 F</span>
+                </div>
+            </div>
+            <!-- Produit 7 -->
+            <div class="product-card" onclick="addToCart('Jardin Croquant', 1200, 'images/jardin_croquant.jpg')">
+                <div class="product-img"><img src="images/jardin_croquant.jpg" alt="Jardin Croquant"></div>
+                <div class="product-info">
+                    <h3>Jardin Croquant</h3>
+                    <span class="price">1200 F</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bouton flottant Panier -->
+    <a href="cart.html" class="floating-cart">
+        <span>🛒</span>
+        <span class="badge" id="cart-badge">0</span>
+    </a>
+
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            updateBadge();
+            updateCartCount();
+        });
+    </script>
+</body>
+</html>
