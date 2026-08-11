@@ -19,12 +19,31 @@
         <a href="cart.html" onclick="toggleMenu()" class="cart-link">🛒 Panier (<span id="mobile-cart-count">0</span>)</a>
     </div>
 
-    <!-- Section Héro -->
-    <header class="hero fade-in-up">
-        <h1>Nû Vivi</h1>
-        <p class="slogan">« Le goût qui parle à ton cœur »</p>
-        <p class="sub-slogan">Yaourts onctueux & Sandwichs gourmands<br>Fait maison à Parakou.</p>
-        <a href="menu.html" class="btn-primary">Explorer le Menu</a>
+    <!-- Section Héro avec Carrousel d'images en fond -->
+    <header class="hero hero-carousel fade-in-up">
+        <!-- Les images défilent ici en arrière-plan -->
+        <div class="carousel-container">
+            <div class="carousel-track">
+                <!-- Utilisation d'images fictives Unsplash (libres de droit) -->
+                <img src="https://images.unsplash.com/photo-1540713434-6a5407d2a50b?w=800&q=80" alt="Sandwich" class="carousel-slide">
+                <img src="https://images.unsplash.com/photo-1563729768-2732914e99ae?w=800&q=80" alt="Yaourt" class="carousel-slide">
+                <img src="https://images.unsplash.com/photo-1581224463294-3a11c8256c7d?w=800&q=80" alt="Pain et sandwich" class="carousel-slide">
+                <img src="https://images.unsplash.com/photo-1547592166-23ac45744acd?w=800&q=80" alt="Bol de yaourt" class="carousel-slide">
+                <!-- On répète les images pour un défilement infini parfait -->
+                <img src="https://images.unsplash.com/photo-1540713434-6a5407d2a50b?w=800&q=80" alt="Sandwich" class="carousel-slide">
+                <img src="https://images.unsplash.com/photo-1563729768-2732914e99ae?w=800&q=80" alt="Yaourt" class="carousel-slide">
+                <img src="https://images.unsplash.com/photo-1581224463294-3a11c8256c7d?w=800&q=80" alt="Pain et sandwich" class="carousel-slide">
+                <img src="https://images.unsplash.com/photo-1547592166-23ac45744acd?w=800&q=80" alt="Bol de yaourt" class="carousel-slide">
+            </div>
+        </div>
+
+        <!-- Le contenu texte par-dessus les images -->
+        <div class="hero-content">
+            <h1>Nû Vivi</h1>
+            <p class="slogan">« Le goût qui parle à ton cœur »</p>
+            <p class="sub-slogan">Yaourts onctueux & Sandwichs gourmands<br>Fait maison à Parakou.</p>
+            <a href="menu.html" class="btn-primary">Explorer le Menu</a>
+        </div>
     </header>
 
     <!-- Section À Propos Rapide -->
