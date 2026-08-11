@@ -1,233 +1,123 @@
-/* style.css - Version "App Mobile Premium" */
+/* style.css - Version Luxe & Animée */
 :root {
-    --green-dark: #0A2B24; /* Vert profond forêt */
-    --gold-light: #E8C87A; /* Or doux et lumineux */
-    --gold-pale: #F8F0E0;  /* Beige crème doré */
-    --white-cream: #FFFCF7;
+    --green-deep: #0a1f1a; /* Vert très foncé, chic */
+    --gold-light: #d4af37; /* Or classique */
+    --gold-pale: #f0e6c8;  /* Or pâle pour les fonds */
+    --cream: #fcf9f2;      /* Crème pour les cartes */
+    --text-dark: #1a1a1a;
+    --text-gold: #b8860b;
     --whatsapp: #25D366;
-    --shadow-card: 0 12px 25px rgba(10, 43, 36, 0.08);
-    --radius-card: 28px;
+    --shadow-elegant: 0 20px 40px rgba(10, 31, 26, 0.08);
+    --radius-lux: 24px;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 body { 
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    background-color: var(--white-cream);
-    color: var(--green-dark);
-    padding-bottom: 100px; /* Espace énorme pour le panier flottant */
+    font-family: 'Palatino', 'Playfair Display', Georgia, serif; /* Police à empattement pour le luxe */
+    background-color: var(--cream);
+    background-image: radial-gradient(circle at 10% 20%, rgba(212, 175, 55, 0.05) 0%, transparent 50%);
+    color: var(--text-dark);
+    padding-bottom: 80px; /* Espace pour le bouton flottant */
+    overflow-x: hidden;
 }
 
-/* --- ANIMATIONS & EFFETS --- */
-@keyframes fadeSlide {
-    from { opacity: 0; transform: translateY(15px) scale(0.95); }
-    to { opacity: 1; transform: translateY(0) scale(1); }
+/* --- ANIMATIONS GLOBALES (Effet de glissement) --- */
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
 }
-.fade-in-item {
-    animation: fadeSlide 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
-    opacity: 0;
+.fade-in-up {
+    animation: fadeUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+    opacity: 0; /* Caché au départ */
 }
 
-/* --- NAVIGATION (Très fine et chic) --- */
+/* --- NAVIGATION (Verre dépoli) --- */
 .mobile-nav {
-    background: var(--green-dark);
+    background: rgba(10, 31, 26, 0.85); /* Vert profond semi-transparent */
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
     color: #fff;
-    padding: 16px 24px;
+    padding: 18px 24px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     position: sticky;
     top: 0;
     z-index: 1000;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.2);
 }
-.logo { font-size: 1.2rem; font-weight: 700; letter-spacing: 1.5px; color: var(--gold-light); }
-.hamburger { font-size: 1.6rem; cursor: pointer; color: #fff; }
+.logo { font-size: 1.4rem; font-weight: bold; letter-spacing: 1px; color: var(--gold-light); }
+.hamburger { font-size: 1.8rem; cursor: pointer; color: var(--gold-light); }
 
-/* --- MENU OVERLAY --- */
+/* --- MENU OVERLAY (Luxe sombre) --- */
 .menu-overlay {
     display: none;
     flex-direction: column;
     position: fixed;
-    top: 60px; left: 0; width: 100%; height: calc(100vh - 60px);
-    background: var(--green-dark);
+    top: 70px; left: 0; width: 100%; height: calc(100vh - 70px);
+    background: rgba(10, 31, 26, 0.98);
+    backdrop-filter: blur(10px);
     padding: 30px 24px;
     z-index: 999;
 }
-.menu-overlay.active { display: flex; animation: fadeSlide 0.3s ease-out; }
+.menu-overlay.active { display: flex; animation: fadeUp 0.4s ease-out; }
 .menu-overlay a {
     color: var(--gold-pale);
     text-decoration: none;
-    padding: 20px 0;
-    border-bottom: 1px solid rgba(255,255,255,0.05);
-    font-size: 1.3rem;
-    font-weight: 500;
-    transition: color 0.3s;
+    padding: 24px 0;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+    font-size: 1.4rem;
+    font-weight: 300;
+    letter-spacing: 2px;
+    transition: all 0.3s;
 }
 .menu-overlay a:hover, .menu-overlay .cart-link { color: var(--gold-light); }
 
-/* --- ACCUEIL (Hero) --- */
+/* --- HERO (Accueil) --- */
 .hero {
-    background: var(--green-dark);
-    padding: 40px 24px 60px;
+    background: linear-gradient(135deg, #0a1f1a 0%, #1a3c34 100%);
+    color: #fff;
+    padding: 70px 24px 50px;
     text-align: center;
-    border-bottom-left-radius: 40px;
-    border-bottom-right-radius: 40px;
-    margin-bottom: 20px;
+    position: relative;
+    border-bottom: 3px solid var(--gold-light);
 }
-.hero h1 { font-size: 2.5rem; color: #fff; letter-spacing: 0.5px; }
-.hero .slogan { font-size: 1rem; color: var(--gold-light); font-weight: 300; margin: 8px 0 20px; }
+.hero h1 { font-size: 3.2rem; margin-bottom: 10px; color: #fff; letter-spacing: 2px; }
+.hero .slogan { font-size: 1.2rem; color: var(--gold-light); font-family: 'Georgia', serif; font-style: italic; margin-bottom: 15px;}
+.hero .sub-slogan { font-size: 1rem; opacity: 0.8; margin-bottom: 30px; font-weight: 300;}
+
+/* --- BOUTONS (Chic) --- */
 .btn-primary {
-    background: var(--gold-light);
-    color: var(--green-dark);
-    padding: 14px 35px;
+    background: transparent;
+    color: var(--gold-light);
+    padding: 14px 40px;
+    border: 2px solid var(--gold-light);
     border-radius: 50px;
     text-decoration: none;
-    font-weight: 700;
+    font-weight: bold;
     display: inline-block;
-    font-size: 0.95rem;
-    box-shadow: 0 4px 15px rgba(232, 200, 122, 0.3);
-}
-
-/* --- MINI CATALOGUE ACCUEIL --- */
-.home-section { padding: 0 24px 20px; }
-.home-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
-.home-header h2 { font-size: 1.2rem; font-weight: 700; }
-.home-header a { color: var(--gold-light); text-decoration: none; font-size: 0.9rem; font-weight: 600; }
-
-.horizontal-scroll {
-    display: flex;
-    overflow-x: auto;
-    gap: 16px;
-    padding-bottom: 10px;
-    scrollbar-width: none; /* Cache la barre de scroll sur Firefox */
-}
-.horizontal-scroll::-webkit-scrollbar { display: none; /* Cache la barre de scroll sur Safari/Chrome */ }
-
-.horizontal-card {
-    flex: 0 0 140px;
-    background: #fff;
-    border-radius: var(--radius-card);
-    padding: 15px;
-    text-align: center;
-    box-shadow: var(--shadow-card);
-    cursor: pointer;
-    transition: transform 0.2s;
-}
-.horizontal-card:active { transform: scale(0.95); }
-.horizontal-card img { width: 80px; height: 80px; object-fit: contain; margin-bottom: 10px; }
-.horizontal-card h4 { font-size: 0.9rem; margin-bottom: 4px; }
-.horizontal-card .price { font-weight: 700; color: var(--gold-light); font-size: 1rem; }
-
-/* --- MENU COMPLET (GRID) --- */
-.page-header { text-align: center; padding: 30px 20px 10px; }
-.page-header h1 { font-size: 2rem; color: var(--green-dark); }
-
-.category-title { 
-    font-size: 1.4rem; 
-    margin: 30px 0 15px; 
-    padding-left: 24px; 
-    color: var(--green-dark); 
-}
-
-.product-grid { 
-    display: grid; 
-    grid-template-columns: 1fr 1fr; 
-    gap: 16px; 
-    padding: 0 24px 20px; 
-}
-
-.product-card {
-    background: #fff;
-    border-radius: var(--radius-card);
-    overflow: hidden;
-    box-shadow: var(--shadow-card);
-    cursor: pointer;
-    transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
-}
-.product-card:active { transform: scale(0.96); box-shadow: 0 5px 10px rgba(0,0,0,0.05); }
-
-.product-img { 
-    height: 130px; 
-    background: #f9f6f0; 
-    display: flex; 
-    justify-content: center; 
-    align-items: center;
-    padding: 15px;
-}
-.product-img img { width: 100%; height: 100%; object-fit: contain; }
-
-.product-info { padding: 0 16px 16px; text-align: center; }
-.product-info h3 { font-size: 0.95rem; margin-bottom: 6px; color: var(--green-dark); }
-.product-info .price { font-weight: 800; color: var(--gold-light); font-size: 1.2rem; }
-
-/* --- PANIER FLOTTANT (Le plus important) --- */
-.floating-cart-bar {
-    position: fixed;
-    bottom: 20px;
-    left: 20px;
-    right: 20px;
-    background: var(--green-dark);
-    border-radius: 60px;
-    padding: 12px 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    z-index: 900;
-    box-shadow: 0 10px 30px rgba(10, 43, 36, 0.4);
-    border: 1px solid rgba(232, 200, 122, 0.2);
-    text-decoration: none;
-    color: #fff;
-}
-.floating-cart-bar .cart-left { display: flex; align-items: center; gap: 12px; }
-.floating-cart-bar .badge { 
-    background: var(--gold-light); 
-    color: var(--green-dark); 
-    border-radius: 50%; 
-    width: 28px; height: 28px; 
-    display: flex; justify-content: center; align-items: center; 
-    font-weight: 700; font-size: 0.9rem;
-}
-.floating-cart-bar .cart-right { font-weight: 700; font-size: 1.1rem; }
-.floating-cart-bar .cart-right span { color: var(--gold-light); margin-left: 5px; }
-
-/* --- PAGE PANIER (Commandes) --- */
-.page-cart { padding: 0 24px 20px; }
-.cart-item {
-    background: #fff;
-    padding: 16px;
-    border-radius: var(--radius-card);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 12px;
-    box-shadow: var(--shadow-card);
-}
-.cart-item h4 { font-size: 1rem; font-weight: 600; }
-.cart-item .item-price { color: var(--gold-light); font-weight: 700; }
-.btn-remove { background: #f0f0f0; border: none; border-radius: 50%; width: 30px; height: 30px; color: #c0392b; font-weight: bold; cursor: pointer; }
-
-.cart-summary {
-    background: #fff;
-    padding: 20px;
-    border-radius: var(--radius-card);
-    margin-bottom: 20px;
-    box-shadow: var(--shadow-card);
-}
-.total-line { display: flex; justify-content: space-between; font-weight: 700; font-size: 1.3rem; }
-
-.form-card { background: #fff; padding: 24px; border-radius: var(--radius-card); box-shadow: var(--shadow-card); }
-.form-group { margin-bottom: 16px; }
-.form-group label { display: block; margin-bottom: 6px; font-weight: 600; font-size: 0.9rem; color: var(--green-dark);}
-.form-group input, .form-group textarea {
-    width: 100%;
-    padding: 14px;
-    border: 1px solid #eee;
-    border-radius: 16px;
     font-size: 1rem;
-    background: #fafafa;
+    transition: all 0.4s;
+    backdrop-filter: blur(5px);
 }
-.form-group input:focus, .form-group textarea:focus { outline: 2px solid var(--gold-light); border-color: transparent; }
+.btn-primary:active { background: var(--gold-light); color: var(--green-deep); transform: scale(0.95); }
 
+.btn-secondary {
+    background: transparent;
+    color: var(--text-dark);
+    border: 1px solid rgba(10, 31, 26, 0.2);
+    padding: 12px 24px;
+    border-radius: 50px;
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 10px;
+    font-family: sans-serif;
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+/* --- BOUTON WHATSAPP (Élégant mais visible) --- */
 .btn-whatsapp {
     background: var(--whatsapp);
     color: #fff;
@@ -236,26 +126,191 @@ body {
     padding: 18px;
     border-radius: 60px;
     font-size: 1.2rem;
-    font-weight: 700;
+    font-weight: bold;
     cursor: pointer;
+    margin-top: 20px;
     box-shadow: 0 8px 20px rgba(37, 211, 102, 0.3);
-    margin-top: 10px;
+    transition: transform 0.2s;
+}
+.btn-whatsapp:active { transform: scale(0.96); }
+
+/* --- SECTIONS COMMUNES --- */
+.section { padding: 24px; max-width: 800px; margin: auto; }
+.page-header { text-align: center; padding: 40px 20px 20px; }
+.page-header h1 { color: var(--green-deep); font-size: 2.4rem; letter-spacing: 1px; }
+.page-header p { color: #666; font-family: sans-serif; letter-spacing: 1px;}
+
+/* --- CARTES PRODUITS (Menu) --- */
+.product-grid { 
+    display: grid; 
+    grid-template-columns: 1fr 1fr; 
+    gap: 18px; 
+    padding-bottom: 20px;
+}
+.category-title { 
+    margin: 40px 0 20px; 
+    color: var(--green-deep); 
+    font-size: 1.6rem;
+    border-bottom: 2px solid var(--gold-light); 
+    padding-bottom: 10px;
+    display: inline-block;
 }
 
-/* --- PAGE À PROPOS --- */
+.product-card {
+    background: #fff;
+    border-radius: var(--radius-lux);
+    overflow: hidden;
+    box-shadow: var(--shadow-elegant);
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+    border: 1px solid rgba(255,255,255,0.5);
+}
+.product-card:active { transform: scale(0.96); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+.product-card:nth-child(1) { animation-delay: 0.1s; }
+.product-card:nth-child(2) { animation-delay: 0.2s; }
+.product-card:nth-child(3) { animation-delay: 0.3s; }
+.product-card:nth-child(4) { animation-delay: 0.4s; }
+
+.product-img { 
+    height: 140px; 
+    background: #f4f0eb; 
+    overflow: hidden; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+    position: relative;
+}
+.product-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
+.product-card:active .product-img img { transform: scale(1.05); }
+
+.product-info { padding: 14px 16px 18px; text-align: center; background: rgba(255,255,255,0.9); }
+.product-info h3 { font-size: 1rem; margin-bottom: 4px; color: var(--green-deep); font-weight: 600;}
+.product-info .price { 
+    font-weight: bold; 
+    color: var(--text-gold); 
+    font-size: 1.1rem; 
+    display: inline-block;
+    background: var(--gold-pale);
+    padding: 2px 12px;
+    border-radius: 30px;
+}
+
+/* --- FLOTTANT PANIER (Luxe) --- */
+.floating-cart {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: var(--green-deep);
+    color: var(--gold-light);
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    font-size: 2rem;
+    box-shadow: 0 10px 30px rgba(10, 31, 26, 0.4);
+    z-index: 900;
+    border: 2px solid var(--gold-light);
+}
+.badge {
+    position: absolute;
+    top: -2px; right: -2px;
+    background: #fff;
+    color: var(--green-deep);
+    border-radius: 50%;
+    width: 26px; height: 26px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    display: flex; justify-content: center; align-items: center;
+    border: 1px solid var(--gold-light);
+}
+
+/* --- PANIER & FORMULAIRE (Carte Luxe) --- */
+.cart-items { margin-bottom: 20px; }
+.cart-item {
+    background: #fff;
+    padding: 18px 20px;
+    border-radius: var(--radius-lux);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+    border: 1px solid rgba(212, 175, 55, 0.1);
+}
+.cart-item h4 { font-size: 1.1rem; color: var(--green-deep); }
+.cart-item .item-price { color: var(--text-gold); font-weight: bold; font-family: sans-serif;}
+.btn-remove { background: none; border: none; color: #c0392b; font-size: 1.2rem; cursor: pointer; opacity: 0.6; }
+
+.cart-summary {
+    background: rgba(255,255,255,0.8);
+    backdrop-filter: blur(10px);
+    padding: 20px;
+    border-radius: var(--radius-lux);
+    margin-bottom: 24px;
+    border: 1px solid rgba(212, 175, 55, 0.2);
+}
+.total-line { display: flex; justify-content: space-between; font-weight: bold; font-size: 1.3rem; margin-top: 10px; color: var(--green-deep); }
+
+.form-card { 
+    padding: 24px; 
+    background: rgba(255,255,255,0.6);
+    backdrop-filter: blur(10px);
+    border-radius: var(--radius-lux); 
+    border: 1px solid rgba(255,255,255,0.8);
+    box-shadow: var(--shadow-elegant);
+}
+.form-group { margin-bottom: 18px; }
+.form-group label { display: block; margin-bottom: 8px; font-weight: 500; font-size: 0.9rem; color: var(--green-deep); letter-spacing: 0.5px;}
+.form-group input, .form-group textarea {
+    width: 100%;
+    padding: 16px;
+    border: 1px solid rgba(0,0,0,0.05);
+    border-radius: 16px;
+    font-size: 1rem;
+    background: #fff;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+}
+.form-group input:focus, .form-group textarea:focus { outline: 2px solid var(--gold-light); border-color: transparent; background: #fff;}
+
+/* --- PAGE À PROPOS (Chic) --- */
 .card {
     background: #fff;
-    border-radius: var(--radius-card);
+    border-radius: var(--radius-lux);
     padding: 24px;
-    margin: 0 24px 20px;
-    box-shadow: var(--shadow-card);
+    margin-bottom: 20px;
+    box-shadow: var(--shadow-elegant);
+    border: 1px solid rgba(255,255,255,0.5);
 }
-.profile-card { text-align: center; padding: 30px; }
-.profile-img .placeholder-img { font-size: 3.5rem; background: var(--gold-pale); width: 90px; height: 90px; border-radius: 50%; display: flex; justify-content: center; align-items: center; margin: 0 auto 15px; border: 3px solid var(--gold-light);}
-.role { color: var(--gold-light); font-weight: 600; font-size: 0.9rem; letter-spacing: 1px; }
+.profile-card { text-align: center; padding: 30px 24px; }
+.profile-img .placeholder-img { 
+    font-size: 4rem; 
+    background: linear-gradient(135deg, var(--gold-pale), #fff);
+    width: 100px; height: 100px; 
+    border-radius: 50%; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    margin: 0 auto 15px; 
+    border: 3px solid var(--gold-light);
+    box-shadow: 0 10px 20px rgba(212, 175, 55, 0.2);
+}
+.role { color: var(--text-gold); font-weight: bold; font-size: 0.9rem; letter-spacing: 1px; }
+.divider { height: 2px; width: 60px; background: var(--gold-light); margin: 15px auto; border-radius: 10px; }
 .values-list { list-style: none; padding: 0; }
-.values-list li { padding: 12px 0; border-bottom: 1px solid #f5f5f5; }
+.values-list li { padding: 12px 0; border-bottom: 1px solid rgba(0,0,0,0.03); font-family: sans-serif;}
 
 /* --- FOOTER --- */
-footer { text-align: center; padding: 30px 20px; font-size: 0.85rem; color: #999; background: var(--green-dark); border-top-left-radius: 40px; border-top-right-radius: 40px; margin-top: 30px; color: #ccc; }
-footer a { color: var(--gold-light); text-decoration: none; font-weight: 600; }
+footer {
+    text-align: center;
+    padding: 40px 20px;
+    font-size: 0.9rem;
+    color: #666;
+    background: #fff;
+    margin-top: 30px;
+    border-top: 1px solid rgba(212, 175, 55, 0.1);
+}
+footer a { color: var(--green-deep); text-decoration: none; font-weight: bold; }
+.verse { font-style: italic; color: #aaa; margin-top: 10px; font-size: 0.8rem; font-family: 'Georgia', serif;}
